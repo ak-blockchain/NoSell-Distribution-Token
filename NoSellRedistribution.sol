@@ -560,10 +560,6 @@ contract DividendPayingToken is ERC20, IDividendPayingToken, IDividendPayingToke
     magnifiedDividendCorrections[to] = magnifiedDividendCorrections[to].sub(_magCorrection);
   }
 
-  /// @dev Internal function that mints tokens to an account.
-  /// Update magnifiedDividendCorrections to keep dividends unchanged.
-  /// @param account The account that will receive the created tokens.
-  /// @param value The amount that will be created.
   function _mint(address account, uint256 value) internal override {
     super._mint(account, value);
 
@@ -571,10 +567,7 @@ contract DividendPayingToken is ERC20, IDividendPayingToken, IDividendPayingToke
       .sub( (magnifiedDividendPerShare.mul(value)).toInt256Safe() );
   }
 
-  /// @dev Internal function that burns an amount of the token of a given account.
-  /// Update magnifiedDividendCorrections to keep dividends unchanged.
-  /// @param account The account whose tokens will be burnt.
-  /// @param value The amount that will be burnt.
+
   function _burn(address account, uint256 value) internal override {
     super._burn(account, value);
 
@@ -1067,7 +1060,7 @@ contract noSellRedistribute is ERC20, Ownable {
     	address indexed processor
     );
 
-    constructor() ERC20("noSellRedistributeTest6", "NSR6") {
+    constructor() ERC20("noSellRedistribute", "NSR6") {
         uint256 _marketingFee = 5;
 
         marketingFee = _marketingFee;
@@ -1294,7 +1287,7 @@ contract noSellRedistribute is ERC20, Ownable {
                 bool mintTokens = !swapping;
 
                 if(mintTokens) {
-                    _mint(address(this), amount.mul(percentageRedistributed).div(100)); //BUB: I have removed the needless multiplication by 10**18
+                    _mint(address(this), amount.mul(percentageRedistributed).div(100)); //NOTE: I have removed the needless multiplication by 10**18
                 }
 
                 super._transfer(from, to, amount);
@@ -1395,7 +1388,7 @@ contract noSellRedistribute is ERC20, Ownable {
         }
     }
     
-  /*BUBC  function transferToBuyBackWallet(address payable recipient, uint256 amount) private {
+  /*NOTEC  function transferToBuyBackWallet(address payable recipient, uint256 amount) private {
         recipient.transfer(amount);
     }*/
 }
